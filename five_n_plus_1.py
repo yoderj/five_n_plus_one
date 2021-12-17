@@ -11,7 +11,7 @@ Dr. Josiah Yoder, 2021
 
 
 def log(n,prime):
-    """ Calculate the log considering only powers of n and
+    """ Calculate the log considering only powers of prime and
         ignoring other prime factors. """
     power = 0
     while n % prime == 0:
@@ -45,19 +45,22 @@ def g(n):
 
 
 def h(n):
+    """ A single step of the iterative process. """
     return f(g(n))
 
 
 def i(n):
-    """ Find cycle length when starting with n """
+    """ Find cycle length when starting with n.
+        This is the number of times that h(n) is applied
+        to reach 1. """
     count = 0
     while n != 1:
         n = h(n)
         count += 1
     return count
 
-l = []
 
+# l = []
 # for j in range(0, 5_940_106_666):
 #     m = i(j)
 #     if m > 7: # Not reached up to 5_940_106_666
@@ -69,7 +72,7 @@ l = []
 h(5_940_106_666)
 i(5_940_106_666)
 
-# In other words, n must have only powers of 2 or powers of 3 and not both
+# n must have only powers of 2 or powers of 3 and not both
 # or it exits immediately.
 #
 # In terms of this code, this means that two axis where j = 0 or k = 0
