@@ -81,7 +81,7 @@ i(5_940_106_666)
 # This is shown experimentally by the loop below but easy to prove for all n.
 # Adding 1 to a multiple of 6 guarantees that neither 2 nor 3 are factors.
 #
-# l = []
+l = []
 # for j in range(0, 1000):
 #     for k in range(0, 1000):
 #         n = (2**j) * (3**k)
@@ -115,3 +115,15 @@ for k in range(0, 1000):
             n = h(n)
         print()
         l.append(m)
+
+# Explore powers of 9
+
+j = 0
+for k in range(0, 30, 2):
+    n = (2**j) * (3**k)
+    m = i(n)
+    print('2**' + str(j), '3**' + str(k), 'i(n):', m, end=' ')
+    while n > 1:
+        print(c(n), end=' ')
+        n = h(n)
+    print()
