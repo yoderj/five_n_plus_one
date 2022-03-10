@@ -59,3 +59,13 @@ And from this point out the pattern continues and can easily be proved by
 induction.
 
 So all even powers of 3 lead to 2 in one step.
+
+# Odd powers of 2
+
+Odd powers of two converge to 1 in a single step.
+
+Consider n = 2^2k * 2, where k is a non-negative integer.
+
+Then 5n+1 = 10*2^2k + 1. For this to be a multiple of 3, we must have 
+10*2^2k mod 3 = 2.  10 mod 3 = 1, and 4 mod 3 = 1, so 10*2^2k mod 3 = 1 for 
+all non-negative k. So the 5n+1 method will simplify this to 1 directly.

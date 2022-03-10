@@ -127,3 +127,15 @@ for k in range(0, 30, 2):
         print(c(n), end=' ')
         n = h(n)
     print()
+
+# Explore odd powers of 2
+print('Odd powers of 2')
+k = 0
+for j in range(1, 10, 2):
+    n = (2**j) * (3**k)
+    m = i(n)
+    print('2**'+str(j),'3**'+str(k),'i(n):',m,end=' ')
+    while n > 1:
+        print(c(n),end=' ')
+        n = h(n)
+    print()
