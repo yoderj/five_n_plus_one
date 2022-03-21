@@ -2,7 +2,7 @@
 Max Milkert, Alex Ruchti, Dr. Josiah Yoder
 2021 - 2022 academic year
 
-Explores Max Milker'ts 5n+1 problem, a variation on the famous 3n+1 problem.
+Explores Max Milkert's 5n+1 problem, a variation on the famous 3n+1 problem in which certain prime factors are retained instead of divided out in between the steps. In this particular case, those prime factors are 2 and 3.
 
 This script explores the 5n+1 problem, first proposed by MSOE student
 Max Milkert, to the best of my knowledge.
