@@ -1,7 +1,7 @@
 # Collatz Research
 
 * https://link.springer.com/article/10.1007/s11227-020-03368-x : Barina, David
-    * Computationak Verification of the Collatz Conjecture up to 2<sup>68</sup>
+    * Computational Verification of the Collatz Conjecture up to 2<sup>68</sup>
     * Uses two branches of the conjecture
         * The fast standard map. 
             T(n) = (3n + 1)/2 if n = 1 (mod 2)
@@ -41,6 +41,7 @@
             For n in the form n = 2<sup>k</sup>n<sub>k</sub> + m<sub>k</sub> | m<sub>k</sub> = n mod 2<sup>k</sup>
         * This simplifies to T<sup>k</sup>(n) = 2 * 3<sup>num odd branches taken</sup>n<sub>k+1<sub> + T<sup>k<sup>(m<sub>k + 1</sub>)
     * Also presents stopping times for numbers of form 2n (stopping time 1) and 4n + 1 (stopping time 2) and others
+    * We can make a tree with branching factor 2 showing how, at each depth of k, the algorithm mutates the num
     * Presents a verification algorithm that only needs to compute open nodes (type 3) and not closed nodes
         * Type 1: Last iteration when checking T<sup>k</sup> resulted in lower value than the initial value
         * Type 2: The last iteration reached a value equal to the initial value 
