@@ -82,7 +82,7 @@ For example, the sequence 2,0,0,1 tells us that the exponent of the power of 4 c
 A similar property applies for powers of 3 and their divisibility by powers of 2 after 5n+1.
 2 is not like the other primes, its powers don’t have primitive roots (except for 4, which has just 3, but should have 2 roots). But the lifting lemma still applies (despite it saying it doesn’t work).
 We know that 3^2 is congruent to 1 mod 8 but not 16. 
-If 3^n is congruent to 1 mod 2^k, and not congruent to 1 mod 2^(k+1), we can write 3^n as 2^k * a +1, where a is not divisible by 2 (otherwise condition 2 is not true). If we square this we get a number of the form 2^(2k) + 2*2^k *a +1. Looking at this number mod 2^(k+1) we get remainder 1, and looking at it mod 2^(k+2) we do not get remainder 1 since a is not divisible by 2.
+If 3^n is congruent to 1 mod 2^k, and not congruent to 1 mod 2^(k+1), we can write 3^n as 2^k * a +1, where a is not divisible by 2 (otherwise condition 2 is not true). If we square this we get a number of the form (2^(2k) * a^2) + 2*2^k *a +1. Looking at this number mod 2^(k+1) we get remainder 1, and looking at it mod 2^(k+2) we do not get remainder 1 since a is not divisible by 2.
 
 This serves to inductively prove that 3^n/4 is congruent to 1 mod n where n is a power of 2. 
 This means a similar string to the one above can specify the power of 3 that maps to 0 under 5n+1 mod each power of 2. But since 2 has that slightly strange divisibility property the string starts with the powers of 8. For example, the string 1 means that 3^1 maps to 0 mod 8, the string 101 means that 3^5 maps to 0 mod 32, etc…
