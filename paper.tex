@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage{ amssymb }
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{balance}
+\usepackage{graphicx}
+\usepackage{nccmath}
+\usepackage{subfig}
+\usepackage{mathtools}
+\usepackage{times}
+\usepackage{url} 
+\usepackage{amsmath}
+\usepackage{appendix}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{algorithm}% http://ctan.org/pkg/algorithm
+\usepackage{algpseudocode}% http://ctan.org/pkg/algorithmicx
+%% Ensure table does not move
+\usepackage{float}
+\floatstyle{plaintop}
+\usepackage[margin=1in]{geometry}
+\let\endchangemargin=\endlist 
+
+
+\title{Preserve Prime}
+
+\begin{document}
+\title{The 5n + 1 Prime Holdout Problem}
+\author{Max Milkert, Alex Ruchti, Dr. Josiah Yoder}
+\maketitle
+\section{Introduction}
+The Collatz Conjecture, also known as the 3n + 1 problem, is a simply-formulated problem that is notoriously difficult to prove. It is defined by piecewise equation 1 below:
+
+
+\begin{ceqn}
+\begin{align}
+    f(n) = \begin{cases} 
+      3n + 1 & n \equiv 1 \pmod{2} \\
+      \frac{n}{2} & n \equiv 0 \pmod{2} \\
+   \end{cases}
+\end{align}
+\end{ceqn}
+
+
+Lothar Collatz postulated that, with repeated applications of the function above, every number would eventually converge to the trivial cycle (1,2). Equation 1 may be condensed into the following form:
+
+\begin{ceqn}
+\begin{align}
+    f(n) = \begin{cases} 
+      3n + 1 & n \equiv 1 \pmod{2} \\
+      \frac{n}{2^a} & n \equiv 0 \pmod{2} \\
+   \end{cases}
+\end{align}
+\end{ceqn}
+
+
+\begin{ceqn}
+\begin{align*}
+Where \text{ }a = v_2(n) = \max\{\, x_i \in \mathbb{N} \mid n \equiv 0 \mod{2^{x_i}} \,\}
+\end{align*}
+\end{ceqn}
+From (2), we see that the Collatz Conjecture alternates between removing all of the prime factors of n equal to two and applying the 3$n$ + 1 function. Presently, no proof has been found that guarantees no $n$ exists for which (2) does not diverge or contain a cycle other than the trivial one. 
+
+We propose prime holdout problems, a new class of problem related to the Collatz Conjecture. While Collatz-type problems revolve around removing select prime factors from $n$ and applying a simple function, prime holdout problems require that only a finite set of prime factors of $n$ are preserved between applications of a function. In this paper, we focus on the prime holdout problem where 2 and 3 are the preserved prime factors and 5$n$ + 1 is the mapping function. We present a series of properties of this problem and prove that, through repeated applications of equation 3, all positive integers $n$ 
+must converge to 1.
+
+
+\begin{ceqn}
+\begin{align}
+    G(n) = \begin{cases} 
+      5n + 1 & n = p \\
+      p & n > p \\
+   \end{cases}
+\end{align}
+\end{ceqn}
+\nonumber
+\begin{ceqn}
+\begin{align}
+Where \text{ } p = 2^{v_2(n)} \times 3^{v_3(n)}
+\end{align}
+\end{ceqn}
+
+The motivation behind choosing this problem is that it's the simplest non-trivial example in the problem class. Anything preserving just one prime (p) must converge since adding 1 will remove divisibility by p from any numbers surviving the initial reduction step. Furthermore, if the number you multiply by is also one of the primes in the holdout set, then it doesn't affect the convergence. Therefore 2,3, and 5 are where the problems start becoming difficult
+
+While 5$n$ + 1 holding out 2,3 is a fascinating variant of preserve-prime class problems, we note that the space of prime holdout sets and mapping functions needs further exploration. Future work will be directed towards generalizing many of the finds shown below for 5$n$ + 1. We also conjecture that no finite prime holdout problems can support divergent trajectories.
+
+\section{Properties}
+In order to facilitate the explanation of the proof of 5$n$ + 1 preserve prime's convergence, we must establish some basic properties of the problem. In the following discussion, we use "step" to refer to one application of 5$n$ + 1 plus the removal of all prime factors not equal to 2 or 3 from the result. We also note that any number that contains at least one of the prime factors 2 or 3 is immediately divided to the number consisting of only its powers of 2 and 3. Therefore, we focus on only $n$ composed of powers of 2 and 3. \\*\\*
+\large{\textbf{Property 1:}} \textit{All n without 2 or 3 as prime factors converge}\\*
+\indent {This is a trivial property of the map itself (4).}\\*
+\\*
+\large{\textbf{Property 2:}} \textit{All n with both 2 and 3 as prime factors converge in 1 step}\\*
+
+\begin{gather*}
+    Let\text{ } {n = 2^a 3^b c}\text{ } for \text{ } a, b, c \in \mathbb{N}\\
+    5(n) + 1 = 2^a 3^b5 c + 1\\
+    2^a 3^b5 c + 1 \not\equiv 0 \pmod{2}\\
+    2^a 3^b5 c + 1 \not\equiv 0 \pmod{3}
+\end{gather*}\\*
+\indent We know that none of the prime factors of a number may be present in that number plus one. Therefore, based on property 1, numbers of form $2^a 3^b5 c$ converge\\*
+\\*
+\large{\textbf{Property 3:}} All $n$ of the form $3^{2a}$ for $a \in \mathbb{N}$ converge in two steps
+\begin{gather*}
+    Let\text{ } {n = 3^{2a}}\text{ } for \text{ } a \in \mathbb{N}\\
+    (5 \times 3^{2a}) + 1 \equiv 0 \pmod{2}\\
+    (5 \times 3^{2a}) + 1 \not\equiv 0 \pmod{4}\\
+    (5 \times 3^{2a}) + 1 \not\equiv 0 \pmod{3}
+\end{gather*}\\*
+\indent We see above that there must be a single power of two remaining in $n$ after one step. Two always must converge to one in the next step.\\*
+\\*
+\large{\textbf{Property 4:}} \textit{All n of the form $2^{2a + 1}$ for $a \in \mathbb{N}$ converge in one step }
+\begin{gather*}
+    Let\text{ } {n = 2^{2a + 1}}\text{ } for \text{ } a \in \mathbb{N}\\
+    (5 \times 2^{2a + 1}) + 1 \not\equiv 0 \pmod{3}
+\end{gather*}\\*
+\indent We see that four is congruent to one modulus three, five is congruent to two modulus three, and one is congruent to one.\\*
+\\*
+\large{\textbf{Property 5:}} \textit{n must fall below itself in steps where $p \not= n$ at the intermediate stage}
+\\*
+\begin{gather*}
+     \frac{5n + 1}{a} < n \text{ } for \text{ } all \text{ } a \ge 7\\
+\end{gather*}\\*
+\\*
+\indent When division occurs after 5$n$ + 1 is applied, the smallest number that may be removed is 7. By the problem definition, prime factors 2 and 3 are preserved. Five is a factor of 5$n$, so it must not be a prime factor of 5$n$ + 1. The smallest remaining prime factor that can be removed in the division stage is 7.\\*
+\\*
+
+\noindent
+\large{\textbf{Property 6:}} \textit{${3^{a+1}}$ is the only power of 3 greater than $3^n$ and less than $5*3^n +1$ for $a \in \mathbb{N}$}\\*
+\begin{gather*}
+     3^{a+1} = 3 \times 3^{a} <( 5 \times 3^{a}) + 1\\
+     3^{a+2} = 9 \times 3^{a} >( 5 \times 3^{a}) + 1
+\end{gather*}\\*
+\\*
+\noindent
+\large{\textbf{Property 7:}} \textit{There are no nontrivial cycles of odd length}
+
+$n$ alternates between a number composed of only powers of two and a number composed of only powers of three in each step. Therefore, in order for $n$ to return to its starting value, it must loop through an even number of steps.
+
+
+\section{Proof of Convergence}
+
+\begin{enumerate}
+
+\item Any power of 4 must descend below itself within 2 steps. 
+
+If there is division in the first step, we are now below the starting number by Property 5. Otherwise  applying the second 5n+1 will put the number into the form $25 * 4^n +6$. The highest power of 2 dividing this is 1, so it will then fall to 2 after division and converges shortly after by Property 3.
+
+
+\item Any power of 3 (that does not create a 2-loop) must descend below itself in 3 steps.
+
+There are 3 possibilities to consider 
+\begin{enumerate}
+    \item The first possibility is that a division occurs within the first step. The result is less than the starting number by Property 5.
+    \item The next possibility occurs if the number completes the first step without dividing. The number is now in the form $4^n$. There are then 2 cases to consider:
+    \begin{enumerate}
+        \item The number can grow again without dividing. If this happens, Stage 1 of this proof shows that the subsequent step will descend to 2. (a 3-step descent for the original number)
+        \item The number divides on the second step. If this is below the starting point, we are finished. If not, then we know from Property 6 and the fact that we didn't loop that the number is now $3^{n+1}$. Either n or n+1 must be even, and by Property 4 we must converge.
+    \end{enumerate}
+\end{enumerate}
+
+
+\item The 5n+1 problem cannot diverge.
+
+Each power of 3 and 4 must fall below themselves in a small number of steps by Stages 1 and 2 of this proof. Therefore you can always inductively trace any trajectory to either the trivial cycle (the one that contains 1) or to some other loop if one exists.
+
+
+\item Loops must be of size 2.
+
+By Stages 1 and 2 of the proof, every power of 4 and 3 will fall below themselves within 2 or 3 steps. Since no odd loops exist (Property 7) any loops must be of length 2
+
+\item No loops of size 2 exist.
+
+let n be the smallest element of the loop, The first step must have no divisions, otherwise Property 5 produces a contradiction. Since divisions must occur on step 2 this gives us the equation 5 * (5 * n+1)+1 = c * n, which simplifies to 25 * n+6=c * n. This equation can only produce the trivial cycle because if n is a power of 4, or a power of 3 greater than $3^1$, then n divides one side but not the other. And if n is 3, then the equation simplifies further to 27 * n = c * n so c = 27. But c cannot be 27 because powers of 3 do not get divided out. This leaves us with only the trivial cycle as a solution. n = 1 and c = 31. 1 cycles to 6, 5 * 6 +1 = 31, then we descend back to 1.
+
+\item Since the process cannot diverge Stage 3 and contains no nontrivial loops by Stages 4 and 5, all integers must return to 1. \huge{ $\blacksquare$}
+
+\end{enumerate}
+\end{document}
