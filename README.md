@@ -162,7 +162,7 @@ now we address the shift for problems that have cleared the initial checks. for 
  the initial checks have to be done starting on 4 instead of 2 since every number automatically gets divisible by 2 after doing *n+1. if your number is 1 mod 4, it might not be able to make multpiles of 4 under the map. if this is the case, return true if 2 does not loop to it, else false.
  now we have to check the lifting lemma criteria again but starting at 4. as with last time keep making sure that one of the remainders can map to 0, and if not check that the last power you could make doesn't form a loop.
  
- your string will be a regular binary string this time, the first bit represents the power needed to get divisibility by the first power of 2
+ your string will be a regular binary string this time, the first bit represents the power needed to get divisibility by the last power of 2
  for which ord(p1) = 2
  
 
