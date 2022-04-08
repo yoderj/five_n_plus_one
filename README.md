@@ -160,8 +160,10 @@ now we address the shift for problems that have cleared the initial checks. for 
  2^1 is the only case where the lifting lemma fails. since squaring a 2n+1 number = 4n^2 +4n +1, the coefficient on n^2 always big enough to be 0 mod p^n+2, but not in this one case. This means that when 2 is p2, there's a completely different set of rules. 
  
  the initial checks have to be done starting on 4 instead of 2 since every number automatically gets divisible by 2 after doing *n+1. if your number is 1 mod 4, it might not be able to make multpiles of 4 under the map. if this is the case, return true if 2 does not loop to it, else false.
- now we have to check the lifting lemma criteria again but starting at 4.
- this makes the basic strings involving 2 where the lifting lemma is true right away...
+ now we have to check the lifting lemma criteria again but starting at 4. as with last time keep making sure that one of the remainders can map to 0, and if not check that the last power you could make doesn't form a loop.
+ 
+ your string will be a regular binary string this time, the first bit represents the power needed to get divisibility by the first power of 2
+ for which ord(p1) = 2
  
 
  
