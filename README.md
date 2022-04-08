@@ -131,7 +131,7 @@ A general 2 prime algorithm
  
  the goal of the algorithm is to construct (almost but not quite) base p2 numbers whose successive indicies track what powers of p1 map to p2^index
  
- Step 1:
+ Step 1 (for primes that aren't 2):
  for both primes:
  find the index that goes to 0 under the *n +1 mapping
  calculate the remainders of powers of each prime mod the other. track which one goes to the index that maps to 0.
@@ -156,7 +156,12 @@ A general 2 prime algorithm
  
 now we address the shift for problems that have cleared the initial checks. for each time p1^x was congruent to 1 in both mod p2^n and p2^n+1, you shift the power of p2 that you map to when you raise p1 to the number in the string by 1. the first bit used to mean p2, it now means p2^number of falied conditions+1. interestingly, in this case there are a few powers of p2 that p1 can never map to since it has a divisibility minimum.
  
- now to deal with 2. 2^1 is the only case where the lifting lemma fails. since squaring a 2n+1 number = 4n^2 +4n +1, the coefficient on n^2 always big enough to be 0 mod p^n+2, but not in this one case. so the checks for 
+ now to deal with 2.
+ 2^1 is the only case where the lifting lemma fails. since squaring a 2n+1 number = 4n^2 +4n +1, the coefficient on n^2 always big enough to be 0 mod p^n+2, but not in this one case. This means that when 2 is p2, there's a completely different set of rules. 
+ 
+ the initial checks have to be done starting on 4 instead of 2 since every number automatically gets divisible by 2 after doing *n+1. if your number is 1 mod 4, it might not be able to make multpiles of 4 under the map. if this is the case, return true if 2 does not loop to it, else false.
+ now we have to check the lifting lemma criteria again but starting at 4.
+ this makes the basic strings involving 2 where the lifting lemma is true right away...
  
 
  
