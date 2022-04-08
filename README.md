@@ -141,12 +141,12 @@ A general 2 prime algorithm
  the powers of 3 mod 11 are: 5, 3... the powers of 11 are 1,1,1,1,1 and cannot conatin 2
  
  else: check if p1^power that makes 1 mod p2 is also congruent to 1 mod p2^2, if it is, check p2^3 etc... until it is not. keep track of this number.
- p2^n grows so the condition eventually is met. Do this for other prime as well. this condition forms the basis of a useful lemma for lifiting congruences to higher prime powers
+ p2^n grows so the condition eventually is met. each time you do this, check the power that you found mapped to 0 again, if it stops being zero under the mapping, check for a loop, return false if loop, else you can return True. Do this for other prime as well. this condition forms the basis of a useful lemma for lifiting congruences to higher prime powers. 
   Special case: 2 has odd behavior since it forms an edge case in the congruence lifting lemma. the fix is to start finding powers at 4.
  now it is time to begin constructing the strings
  Step 2:
  
- in the simplest case, 2 is not one of the primes, and p1^(p2-1) is not congruent to 1 mod p2^2.
+ in the simplest case, 2 is not p2, and p1^(p2-1) is not congruent to 1 mod p2^2.
  
  in this case the digits in the string are (mostly) base p2. the first digit will be between 0 (inclusive) and ord(p1) mod p2 (exclusive). the next digits will be normal base p2 digits. the first digit will be the 1's place, the second will be the ord(p1)'s place, the third will be the p2*ord(p1)'s place etc...
  these digits represent the powers p1 must be raised to for the mapping to send it to p2^index. the first digit tells you what goes to p2, the next is p2^2, etc...
@@ -154,11 +154,10 @@ A general 2 prime algorithm
  
  this is very weird, so heres an example. 5n+1{2,7} 2^3 is congruent to 1, a primitive root would take 6. 4 is the index that goes to 1 under the 5n+1 mapping, so 2^2 is the number you want. the first few digits of the string look like: 2, 3, 6, 4. the 2 tells you that 2^2 -> 7. the next tells you that 2^(2*1 + 3*3) -> 49. the third tells you that 2^(2*1 + 3*3 + 6*21) -> 7^3, and the fourth tells you that adding 4*(3*49) to the exponent will give you divisibility by 7^4 
  
-now we address the shift.
+now we address the shift for problems that have cleared the initial checks. for each time p1^x was congruent to 1 in both mod p2^n and p2^n+1, you shift the power of p2 that you map to when you raise p1 to the number in the string by 1. the first bit used to mean p2, it now means p2^number of falied conditions+1. interestingly, in this case there are a few powers of p2 that p1 can never map to since it has a divisibility minimum.
  
- for each time p1^x was congruent to 1 in both mod p2^n and p2^n+1, you shift the power of p2 that you map to when you raise p1 to the number in the string by 1. the fitst bit used to mean p2, it now means p2^number of falied conditions+1.
+ now to deal with 2. 2^1 is the only case where the lifting lemma fails. since squaring a 2n+1 number = 4n^2 +4n +1, the coefficient on n^2 always big enough to be 0 mod p^n+2, but not in this one case. so the checks for 
  
- example: "classic" 5n+1 problem. 2^2 under 5n+1 goes to powers of 3, 3^1 under 5n+1 goes to powers of 2
- one string represents powers of 4 that go to powers of 3. the other will represent powers of 3 that go to powers of 2
+
  
  
