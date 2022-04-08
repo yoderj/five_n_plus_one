@@ -165,6 +165,12 @@ now we address the shift for problems that have cleared the initial checks. for 
  your string will be a regular binary string this time, the first bit represents the power needed to get divisibility by the last power of 2
  for which ord(p1) = 2
  
-
+Step 3:
+ 
+ now we generate the strings. for each string there will be p2 choices for which power of p1 maps to the next power of p2. to test which choice it is we use fast modular exponentiation to generate all p2 of the candidates, and then test if they map to 0, setting the next digit according to the answer.
+ 
+ Step 4:
+ 
+ once we have the strings we need to look for loops. for each number represented by the first n digits of the first string, look up n in the second string, if it goes back to the first number, you have a loop.
  
  
