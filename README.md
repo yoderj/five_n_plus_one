@@ -108,3 +108,57 @@ The majority of the work for confirming the numbers will be in getting these str
 11. loops must be of size 2. powers of 4 that do not have a 2-loop fall to 2 in 2 steps by point 6, so larger loops with powers of 4 as the lowest element cannot exist. by point 8, powers of 3 at the start of a growing trajectory fall to 2 at the max step length of 4, so this cannot support a loop. there are also no odd loops since by point 10. this means that a loop must be of size 2.
 12. no loops of size 2 exist. let n be the smallest element of the loop, after the first 5n+1 there can be no divisions since by point 5 that produces a contradiction of n not being the smallest element. this means the divisions must occur on step 2. this gives us the equation 5 * (5 * n+1)+1 = c * n. Simplify this to 25 * n+6=c * n. and this equation can only produce the trivial cycle becasue if n is a power of 4, or a power of 3 greater than 3^1, then n divides one side but not the other. and if n is 3, then 27 * n = c * n so c = 27, but c cannot be 27 becuase powers of 3 do not get divided out. this leaves us with only the trivial cycle as a solution. n = 1 and c = 31. 1 cycles to 6, 5 * 6 +1 = 31, then we descend back to 1.
 13. since the process cannot diverge (point 9) and contains no nontrivial loops (points 10 and 11) all integers must return to 1.
+
+ Some Max Thoughts on finding lower bounds
+ Ratio of exponent bigness is log(p1)/log(p2)
+P1 string can append zeros up until the index representing a power of p2 where the power equals the floor of the bigness ratio times the power it represents. In the worst case the power of p2 is 1 above the power of p1, so the upper limit on the number of additional zeros is however many powers of p2 * the starting number +1 fit under n*_+1. This should be the ceiling of logp2(n)
+
+In the case of the 4 string in the 5n+1 problem, this happened with 2001. 4^2 encompasses floor 1.26 *2 = 2 powers of 3. There are then 2 = ceiling of log4(5) available places to grow by appending 0
+
+A similar thing applies to the p2 string to bound the maximum number of zeros it can append but invert the bigness ratio. The minimum is bounded by the need to stay above the initial number.
+
+Now we want to show that the minimum number of zeroes appended to the first string encompasses all powers represented in the range of growing maximally for 2 steps and staying barely above the starting point
+In the case of 2 primes we can look at the floor of log base p1(n^2 +n +1) for the number of powers contained in 2 steps of growth, this will tell us that p1^s + that log thing is the maximum power of p1 attainable in 2 steps
+we need to look at the ceiling of log base p2 of that first log thing, this is the most (since the bits will likely be of greater significance) number of base p2 bits needed to hold that range of powers
+then we take the log p2 ceiling again of that number of p2 bits to find the number of bits needed to store the number that would necessitate that many bits to be zeroed to grow, that will serve as the p1 exponent for the lower bound.
+P1 and p2 only need be prime powers. Also that means the bigness ratios will be different for each string.
+This is only needed for conjectures where both primes have powers that lead to each other. For example, 7n+1 {5,11} none of this is necessary since remainder 11 and all its powers =1 mod 5, and 7*1+1 is never 0. The more mathy condition is that this is needed for conjectures where the modulus that maps to 0 in each prime is one of the other prime’s powers less than or equal that which is needed to return to 1. Furthermore that power must form strings like it does for 5n+1 since the lifting thing kicks in when congruent to 1 mod p^n and not mod p^n+1. That power remains constant, so eventually p^n+whatever will grow big enough that it is not 1, that is then the starting index of your string.
+
+An example of the bound being found with 4^n mod powers of 3 using 1000000007 n +1 is log4(big2 + big +1) floor is 29 as floor. To span 29 numbers takes at most ceiling log3(29) = 4 bits. To require zeroing out the next 4 string positions takes a number that’s log3(4) ceiling = 2 big. We can just ignore the bigness ratio since its >1 So the lower bound can be put at 4^9. Not the tightest but it works.
+
+ 
+A general 2 prime algorithm
+ 
+ the goal of the algorithm is to construct (almost but not quite) base p2 numbers whose successive indicies track what powers of p1 map to p2^index
+ 
+ Step 1:
+ for both primes:
+ find the index that goes to 0 under the *n +1 mapping
+ calculate the remainders of powers of each prime mod the other. track which one goes to the index that maps to 0.
+ if: either prime cannot lead to powers of the other terminate algorithm return true
+ 
+ example: 7n+1{5,11} remainder 2 mod 5 goes to 0, remainder 3 mod 11 goes to 0
+ the powers of 3 mod 11 are: 5, 3... the powers of 11 are 1,1,1,1,1 and cannot conatin 2
+ 
+ else: check if p1^power that makes 1 mod p2 is also congruent to 1 mod p2^2, if it is, check p2^3 etc... until it is not. keep track of this number.
+ p2^n grows so the condition eventually is met. Do this for other prime as well. this condition forms the basis of a useful lemma for lifiting congruences to higher prime powers
+  Special case: 2 has odd behavior since it forms an edge case in the congruence lifting lemma. the fix is to start finding powers at 4.
+ now it is time to begin constructing the strings
+ Step 2:
+ 
+ in the simplest case, 2 is not one of the primes, and p1^(p2-1) is not congruent to 1 mod p2^2.
+ 
+ in this case the digits in the string are (mostly) base p2. the first digit will be between 0 (inclusive) and ord(p1) mod p2 (exclusive). the next digits will be normal base p2 digits. the first digit will be the 1's place, the second will be the ord(p1)'s place, the third will be the p2*ord(p1)'s place etc...
+ these digits represent the powers p1 must be raised to for the mapping to send it to p2^index. the first digit tells you what goes to p2, the next is p2^2, etc...
+ the maximum value of these weird number representations is the normal phi function of the powers of p2 but with the one p-1 factor replaced by ord(p1) mod p2
+ 
+ this is very weird, so heres an example. 5n+1{2,7} 2^3 is congruent to 1, a primitive root would take 6. 4 is the index that goes to 1 under the 5n+1 mapping, so 2^2 is the number you want. the first few digits of the string look like: 2, 3, 6, 4. the 2 tells you that 2^2 -> 7. the next tells you that 2^(2*1 + 3*3) -> 49. the third tells you that 2^(2*1 + 3*3 + 6*21) -> 7^3, and the fourth tells you that adding 4*(3*49) to the exponent will give you divisibility by 7^4 
+ 
+now we address the shift.
+ 
+ for each time p1^x was congruent to 1 in both mod p2^n and p2^n+1, you shift the power of p2 that you map to when you raise p1 to the number in the string by 1. the fitst bit used to mean p2, it now means p2^number of falied conditions+1.
+ 
+ example: "classic" 5n+1 problem. 2^2 under 5n+1 goes to powers of 3, 3^1 under 5n+1 goes to powers of 2
+ one string represents powers of 4 that go to powers of 3. the other will represent powers of 3 that go to powers of 2
+ 
+ 
