@@ -109,23 +109,6 @@ The majority of the work for confirming the numbers will be in getting these str
 12. no loops of size 2 exist. let n be the smallest element of the loop, after the first 5n+1 there can be no divisions since by point 5 that produces a contradiction of n not being the smallest element. this means the divisions must occur on step 2. this gives us the equation 5 * (5 * n+1)+1 = c * n. Simplify this to 25 * n+6=c * n. and this equation can only produce the trivial cycle becasue if n is a power of 4, or a power of 3 greater than 3^1, then n divides one side but not the other. and if n is 3, then 27 * n = c * n so c = 27, but c cannot be 27 becuase powers of 3 do not get divided out. this leaves us with only the trivial cycle as a solution. n = 1 and c = 31. 1 cycles to 6, 5 * 6 +1 = 31, then we descend back to 1.
 13. since the process cannot diverge (point 9) and contains no nontrivial loops (points 10 and 11) all integers must return to 1.
 
- Some Max Thoughts on finding lower bounds
- Ratio of exponent bigness is log(p1)/log(p2)
-P1 string can append zeros up until the index representing a power of p2 where the power equals the floor of the bigness ratio times the power it represents. In the worst case the power of p2 is 1 above the power of p1, so the upper limit on the number of additional zeros is however many powers of p2 * the starting number +1 fit under n*_+1. This should be the ceiling of logp2(n)
-
-In the case of the 4 string in the 5n+1 problem, this happened with 2001. 4^2 encompasses floor 1.26 *2 = 2 powers of 3. There are then 2 = ceiling of log4(5) available places to grow by appending 0
-
-A similar thing applies to the p2 string to bound the maximum number of zeros it can append but invert the bigness ratio. The minimum is bounded by the need to stay above the initial number.
-
-Now we want to show that the minimum number of zeroes appended to the first string encompasses all powers represented in the range of growing maximally for 2 steps and staying barely above the starting point
-In the case of 2 primes we can look at the floor of log base p1(n^2 +n +1) for the number of powers contained in 2 steps of growth, this will tell us that p1^s + that log thing is the maximum power of p1 attainable in 2 steps
-we need to look at the ceiling of log base p2 of that first log thing, this is the most (since the bits will likely be of greater significance) number of base p2 bits needed to hold that range of powers
-then we take the log p2 ceiling again of that number of p2 bits to find the number of bits needed to store the number that would necessitate that many bits to be zeroed to grow, that will serve as the p1 exponent for the lower bound.
-P1 and p2 only need be prime powers. Also that means the bigness ratios will be different for each string.
-This is only needed for conjectures where both primes have powers that lead to each other. For example, 7n+1 {5,11} none of this is necessary since remainder 11 and all its powers =1 mod 5, and 7*1+1 is never 0. The more mathy condition is that this is needed for conjectures where the modulus that maps to 0 in each prime is one of the other prime’s powers less than or equal that which is needed to return to 1. Furthermore that power must form strings like it does for 5n+1 since the lifting thing kicks in when congruent to 1 mod p^n and not mod p^n+1. That power remains constant, so eventually p^n+whatever will grow big enough that it is not 1, that is then the starting index of your string.
-
-An example of the bound being found with 4^n mod powers of 3 using 1000000007 n +1 is log4(big2 + big +1) floor is 29 as floor. To span 29 numbers takes at most ceiling log3(29) = 4 bits. To require zeroing out the next 4 string positions takes a number that’s log3(4) ceiling = 2 big. We can just ignore the bigness ratio since its >1 So the lower bound can be put at 4^9. Not the tightest but it works.
-
  
 A general 2 prime algorithm
  
@@ -185,3 +168,11 @@ Proof of why the strings work.
  4. only 2 loops need to be checked above the bound (to be defined next) since divergence as well as larger loops are not possible. assume you've been running the algorithm for a little bit and discover that p1^n grows under the map. n is represented in bits of some base, but the power of p2 is represented by the index,when above the bound, due to this exponential difference in number size, a long consecutive row of indexes must be zero since p1^n will be divisible by all of them under the map. in the next step, the larger number p2^m will also need to append some zeros to stay above the starting value since m fits into log(m) bits but needs to have divisibility > p1^n under the map which requires >n bits. if we don't form a 2-loop here, the next power of p1 will be divisible by a power of p2 less than m, since above the bound, p1^n has the greatest divisiblity for all the exponents of p1 that could be reached in this step. now that we have gone to a power of p2 less than m, it will map to something divisible by less than p1^n since the nth bit is one of the zeroed out bits covered by p2^m. the number has now descended below itself. since this descent is striclty less than p1^n, a 4-loop is impossible, leaving only 2-loops to check.
  
  5. defining the bound.
+ Now we want to show that the minimum number of zeroes appended to the first string encompasses all powers represented in the range of growing maximally for 2 steps and staying barely above the starting point
+In the case of 2 primes we can look at the floor of log base p1(n^2 +n +1) the n as in *n+1 for the problem, not n from previous step. for the number of powers contained in 2 steps of growth, this will tell us that p1^s + that log thing is the maximum power of p1 attainable in 2 steps
+we need to look at the ceiling of log base p2 of that first log thing, this is the most (since the bits will likely be of greater significance) number of base p2 bits needed to hold that range of powers
+then we take the log p2 ceiling again of that number of p2 bits to find the number of bits needed to store the number that would necessitate that many bits to be zeroed to grow, that will serve as the p1 exponent for the lower bound.
+
+An example of the bound being found with 4^n mod powers of 3 using 1000000007 n +1 is log4(big2 + big +1) floor is 29 as floor. To span 29 numbers takes at most ceiling log3(29) = 4 bits. To require zeroing out the next 4 string positions takes a number that’s log3(4) ceiling = 2 big. We can just ignore the bigness ratio since its >1 So the lower bound can be put at 4^9. Not the tightest but it works.
+ 
+ one more thing to mention is that we also need the logp2(m) to be less than n so that there needs to be zeroes appended in the other string, so the bound is the greater value found by these 2 things.
