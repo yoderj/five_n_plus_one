@@ -111,6 +111,7 @@ The majority of the work for confirming the numbers will be in getting these str
 
  
 A general 2 prime algorithm
+------------------------
  
  the goal of the algorithm is to construct (almost but not quite) base p2 numbers whose successive indicies track what powers of p1 map to p2^index
  
