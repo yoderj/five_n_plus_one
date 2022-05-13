@@ -425,9 +425,11 @@ def ugly_algorithm_2(c, p1,d):
 
 
 def brute_force_confirm(c,p1,p2):
-    for i in range(1,100):
+    n = 1
+    for i in range(0,150):
         seen = set()
-        number = p1**i
+        n*=p1
+        number = n
         seen.add(number)
         while not number == 1:
             number*=c
@@ -444,9 +446,11 @@ def brute_force_confirm(c,p1,p2):
                 return False
             else:
                 seen.add(number)
-    for i in range(1,100):
+    n = 1
+    for i in range(1,150):
         seen = set()
-        number = p2**i
+        n*=p2
+        number = n
         seen.add(number)
         while not number == 1:
             number*=c
@@ -464,28 +468,29 @@ def brute_force_confirm(c,p1,p2):
             else:
                 seen.add(number)
     return True
-"""
-primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101]
+
+primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151]
 false_count=0
 for p1 in primes:
     for p2 in primes:
         for p3 in primes:
             if not(p1==p2 or p2==p3 or p3==p1):
                 q = brute_force_confirm(p1, p2, p3)
-                w = ugly_algorithm(p1, p2, p3)
+                w = ugly_algorithm(p1, p2, p3,10)
                 if not q:
                     false_count += 1
                 if not q and not w == False:
                     print(p1)
                     print(p2)
                     print(p3)
+
                 if q and not w:
                     print(p1)
                     print(p2)
                     print(p3)
-                
-"""
-print(ugly_algorithm(5,2,3,512))
+print(false_count)
+
+#print(ugly_algorithm(5,2,3,512))
 
 
 
