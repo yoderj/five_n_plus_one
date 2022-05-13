@@ -219,11 +219,11 @@ def test(c,p1,p2,ord_p1,ord_p2,shift_p1,shift_p2,string1,string2):
                 return str(p1) + " ^ (" + str(ord_p1) + " * " + str(p2) + " ^ " + str(i - 1) + ")"
     return True
 #the confirmed until return value is exclusive, as in it is only confirmed before that point
-def ugly_algorithm(c, p1, p2):
+def ugly_algorithm(c, p1, p2,d):
     if p1 == 2 and p2 % 4 == 3:
-        return ugly_algorithm_2(c, p2)
+        return ugly_algorithm_2(c, p2,d)
     if p2 == 2 and p1 % 4 == 3:
-        return ugly_algorithm_2(c, p1)
+        return ugly_algorithm_2(c, p1,d)
     # remainder that goes to 0 under cn+1 for each prime
     maps_to_0_p1 = (p1 - 1) * modular_inverse(p1, c) % p1
     maps_to_0_p2 = (p2 - 1) * modular_inverse(p2, c) % p2
@@ -242,8 +242,8 @@ def ugly_algorithm(c, p1, p2):
     if type(shift_p2) == bool:
         return shift_p2
 
-    string1 = make_string(c, p1, p2, shift_p1, ord_p1, pow_p1, 10)
-    string2 = make_string(c, p2, p1, shift_p2, ord_p2, pow_p2, 10)
+    string1 = make_string(c, p1, p2, shift_p1, ord_p1, pow_p1, d)
+    string2 = make_string(c, p2, p1, shift_p2, ord_p2, pow_p2, d)
     confirmed_until_1 = str(p1) + " ^ (" + str(ord_p1) + " * " + str(p2) + " ^ " + str(len(string1) - 1) + ")"
     confirmed_until_2 = str(p2) + " ^ (" + str(ord_p2) + " * " + str(p1) + " ^ " + str(len(string2) - 1) + ")"
     """
@@ -354,7 +354,7 @@ def test_2(c,p1,p2,ord_p1,ord_p2,shift_p1,shift_p2,string1,string2):
                 return str(p1) + " ^ (" + str(ord_p1) + " * " + str(p2) + " ^ " + str(i - 1) + ")"
     return True
 
-def ugly_algorithm_2(c, p1):
+def ugly_algorithm_2(c, p1,d):
     # finds inverse mod 4 for the case with 2
     maps_to_0_p1 = (p1 - 1) * modular_inverse(p1, c) % p1
     maps_to_0_p2 = (4 - 1) * modular_inverse(4, c) % 4
@@ -371,8 +371,8 @@ def ugly_algorithm_2(c, p1):
     if type(shift_p2) == bool:
         return shift_p2
 
-    string1 = make_string(c, p1, 2, shift_p1, ord_p1, pow_p1, 10)
-    string2 = make_string(c, 2, p1, shift_p2, ord_p2, pow_p2, 10)
+    string1 = make_string(c, p1, 2, shift_p1, ord_p1, pow_p1, d)
+    string2 = make_string(c, 2, p1, shift_p2, ord_p2, pow_p2, d)
     confirmed_until_1 = str(p1) + " ^ (" + str(ord_p1) + " * " + str(2) + " ^ " + str(len(string1) - 1) + ")"
     confirmed_until_2 = str(2) + " ^ (" + str(ord_p2) + " * " + str(p1) + " ^ " + str(len(string2) - 1) + ")"
     """
@@ -392,9 +392,9 @@ def ugly_algorithm_2(c, p1):
             if not full_trace_2(p1, ord_p2, string1, string2, shift_p1, shift_p2, number, 1):
                 return False
         else:
-            maps_to = lookup(ord_p1, p2, string1, shift_p1, number)
+            maps_to = lookup_2(string1, shift_p1, number)
             if maps_to == -1:
-                confirmed_until_1=str(p1) + " ^ (" + str(ord_p1) + " * " + str(p2) + " ^ " + str(i - 1) + ")"
+                confirmed_until_1=str(p1) + " ^ (" + str(ord_p1) + " * " + str(2) + " ^ " + str(i - 1) + ")"
                 break
             loop_flag = lookup(ord_p2, p1, string2, shift_p2, maps_to)
             if loop_flag == number and not number == 0:
@@ -413,7 +413,7 @@ def ugly_algorithm_2(c, p1):
         else:
             maps_to = lookup(ord_p2, p1, string2, shift_p2, number)
             if maps_to == -1:
-                confirmed_until_2= str(p1) + " ^ (" + str(ord_p1) + " * " + str(p2) + " ^ " + str(i - 1) + ")"
+                confirmed_until_2= str(2) + " ^ (" + str(ord_p2) + " * " + str(p1) + " ^ " + str(i - 1) + ")"
                 break
             loop_flag = lookup_2(string1, shift_p1, maps_to)
             if loop_flag == number and not number == 0:
@@ -464,7 +464,7 @@ def brute_force_confirm(c,p1,p2):
             else:
                 seen.add(number)
     return True
-
+"""
 primes = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101]
 false_count=0
 for p1 in primes:
@@ -479,13 +479,13 @@ for p1 in primes:
                     print(p1)
                     print(p2)
                     print(p3)
-                """
                 if q and not w:
                     print(p1)
                     print(p2)
                     print(p3)
-                """
-print(false_count)
+                
+"""
+print(ugly_algorithm(5,2,3,512))
 
 
 
